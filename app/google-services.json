@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "204129946766",
+    "firebase_url": "https://parcheggiami.firebaseio.com",
+    "project_id": "parcheggiami",
+    "storage_bucket": "parcheggiami.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204129946766:android:94466c7c4d1754c49e8ddf",
+        "android_client_info": {
+          "package_name": "com.example.Parcheggiami"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvRNZUrj568TNCA9zfyJaG43xJl0Lt6ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204129946766:android:e5fc2585597f83239e8ddf",
+        "android_client_info": {
+          "package_name": "com.example.parcheggiami"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvRNZUrj568TNCA9zfyJaG43xJl0Lt6ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,14 +15,12 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    MapView m1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        m1=(MapView)findViewById(R.id.mapView);
 
 
     }

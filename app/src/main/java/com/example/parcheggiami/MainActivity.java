@@ -21,9 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        M1=(MapView)findViewById(R.id.mapView);
+        m1=(MapView)findViewById(R.id.mapView);
 
 
     }

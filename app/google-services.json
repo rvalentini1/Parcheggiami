@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "204129946766",
-    "firebase_url": "https://parcheggiami.firebaseio.com",
-    "project_id": "parcheggiami",
-    "storage_bucket": "parcheggiami.appspot.com"
+    "project_number": "32636225981",
+    "firebase_url": "https://parcheggiami-97089.firebaseio.com",
+    "project_id": "parcheggiami-97089",
+    "storage_bucket": "parcheggiami-97089.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:204129946766:android:94466c7c4d1754c49e8ddf",
+        "mobilesdk_app_id": "1:32636225981:android:78b4dd6f2b358faaf86ad4",
         "android_client_info": {
-          "package_name": "com.example.Parcheggiami"
+          "package_name": "com.example.parcheggiami"
         }
       },
       "oauth_client": [
         {
-          "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+          "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBvRNZUrj568TNCA9zfyJaG43xJl0Lt6ek"
+          "current_key": "AIzaSyAJ3HZGRC0QC-Xb87jkFdAfJVI7bVo8vxM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+              "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -37,27 +37,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:204129946766:android:e5fc2585597f83239e8ddf",
+        "mobilesdk_app_id": "1:32636225981:android:09b8b7811ecacacaf86ad4",
         "android_client_info": {
-          "package_name": "com.example.parcheggiami"
+          "package_name": "come.example.parcheggiami"
         }
       },
       "oauth_client": [
         {
-          "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+          "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBvRNZUrj568TNCA9zfyJaG43xJl0Lt6ek"
+          "current_key": "AIzaSyAJ3HZGRC0QC-Xb87jkFdAfJVI7bVo8vxM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "204129946766-mu9jkcgnkpncl7ln3hmm76bg2cf6j7jd.apps.googleusercontent.com",
+              "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

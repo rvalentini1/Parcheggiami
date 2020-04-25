@@ -15,34 +15,13 @@
       },
       "oauth_client": [
         {
-          "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAJ3HZGRC0QC-Xb87jkFdAfJVI7bVo8vxM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:32636225981:android:09b8b7811ecacacaf86ad4",
-        "android_client_info": {
-          "package_name": "come.example.parcheggiami"
-        }
-      },
-      "oauth_client": [
+          "client_id": "32636225981-2cnk2jcoijp38cd1hlm5438f320722de.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parcheggiami",
+            "certificate_hash": "f0b792ce70324aaf5851c9615eab1a5fd27475f9"
+          }
+        },
         {
           "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
           "client_type": 3
@@ -57,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "32636225981-n3kjefrn67mk7a19ga25oem4c14t7dr5.apps.googleusercontent.com",
+              "client_id": "32636225981-7ode1d8fad4lhmban5ucuhjpdjfebqgu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

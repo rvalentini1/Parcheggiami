@@ -22,24 +22,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private static final String ARG_NAME = "username";
 
-
+    FirebaseAuth firebaseAuth;
+    GoogleSignInClient googleSignInClient;
 
     public static void startActivity(Context context, String username) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ARG_NAME, username);
         context.startActivity(intent);
     }
-
-    FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView textView = findViewById(R.id.textViewWelcome);
         if (getIntent().hasExtra(ARG_NAME)) {
-            textView.setText(String.format("Welcome - %s", getIntent().getStringExtra(ARG_NAME)));
+            textView.setText(String.format("Benvenuto - %s", getIntent().getStringExtra(ARG_NAME)));
         }
         findViewById(R.id.buttonLogout).setOnClickListener(this);
         findViewById(R.id.buttonDisconnect).setOnClickListener(this);
@@ -68,25 +65,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signOut() {
-        // Firebase sign out
+        // Firebase Logout
         firebaseAuth.signOut();
-
-        // Google sign out
+        // Google Logout
         googleSignInClient.signOut().addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // Google Sign In failed, update UI appropriately
+                        // Google Login fallita,  aggiorno  UI
                         Log.w(TAG, "Signed out of google");
                         Intent myIntent = new Intent(MainActivity.this, Login.class);
-
                         MainActivity.this.startActivity(myIntent);
                     }
                 });
     }
 
     private void revokeAccess() {
-        // Firebase sign out
+        // Firebase Logout
         firebaseAuth.signOut();
 
         // Google revoke access
@@ -94,9 +89,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // Google Sign In failed, update UI appropriately
+                        // Google Login fallita,  aggiorno  UI
                         Log.w(TAG, "Revoked Access");
                     }
                 });
     }
 }
+

@@ -4,20 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#234CA1"
     android:orientation="vertical">
 
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="568dp"
         android:paddingTop="50dp"
-        class="com.google.android.gms.maps.SupportMapFragment"
         tools:context=".MapsActivity" />
 
     <Button
         android:id="@+id/buttonPark"
+        android:bottomRightRadius="10dp"
+        android:bottomLeftRadius="10dp"
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -26,10 +31,14 @@
         android:layout_marginTop="593dp"
         android:layout_marginEnd="116dp"
         android:layout_marginBottom="5dp"
-        android:background="#359c5e"
-        android:padding="8dp"
+        android:background="#C62828"
+        android:elevation="0"
         android:onClick="onClickBtn"
-        android:text="SALVA PARCHEGGIO" />
+        android:padding="8dp"
+        android:text="P"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textDistance"

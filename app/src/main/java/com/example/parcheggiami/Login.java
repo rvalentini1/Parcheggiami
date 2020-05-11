@@ -1,11 +1,16 @@
 package com.example.parcheggiami;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,16 +35,22 @@ public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1001;
 
     GoogleSignInClient googleSignInClient;
-
+    private Button Btn;
+    private Button RegisterButton;
     private FirebaseAuth firebaseAuth;
     ActionBar actionbar;
+
+    private EditText emailTextView, passwordTextView;
+    private Button Btn2;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-         actionbar = getSupportActionBar();
-         actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#234ca1")));
+     /*    actionbar = getSupportActionBar();
+         actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#234ca1")));*/
 
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
@@ -50,8 +61,102 @@ public class Login extends AppCompatActivity {
             }
         });
 
+
         // Configuro il cliente di google
         configureGoogleClient();
+
+
+        // initialising all views through id defined above
+        emailTextView = findViewById(R.id.username);
+        passwordTextView = findViewById(R.id.password);
+        Btn2 = findViewById(R.id.login);
+        progressBar = findViewById(R.id.progressBar);
+
+        // Set on Click Listener on Sign-in button
+        Btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                loginUserAccount();
+            }
+        });
+    }
+
+
+    public void onClickRegister(View v) {
+        showToastMessage("Ciaooooooo");
+        Intent myIntent = new Intent(Login.this, RegistrationActivity.class);
+
+        Login.this.startActivity(myIntent);
+
+    }
+
+    private void loginUserAccount()
+    {
+
+        // show the visibility of progress bar to show loading
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Take the value of two edit texts in Strings
+        String email, password;
+        email = emailTextView.getText().toString();
+        password = passwordTextView.getText().toString();
+
+        // validations for input email and password
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(getApplicationContext(),
+                    "Please enter email!!",
+                    Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(),
+                    "Please enter password!!",
+                    Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        // signin existing user
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(
+                                    @NonNull Task<AuthResult> task)
+                            {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Login Riuscito!!",
+                                            Toast.LENGTH_LONG)
+                                            .show();
+
+                                    // hide the progress bar
+                                    progressBar.setVisibility(View.GONE);
+
+                                    // if sign-in is successful
+                                    // intent to home activity
+                                    Intent intent
+                                            = new Intent(Login.this,
+                                            MainActivity.class);
+                                    startActivity(intent);
+                                }
+
+                                else {
+
+                                    // sign-in failed
+                                    Toast.makeText(getApplicationContext(),
+                                            "Login failed!!",
+                                            Toast.LENGTH_LONG)
+                                            .show();
+
+                                    // hide the progress bar
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
+                        });
     }
 
     private void configureGoogleClient() {
@@ -147,7 +252,11 @@ public class Login extends AppCompatActivity {
         if (user != null) {
             Log.w("TAGPROVA", user.getDisplayName());
 
-            MainActivity.startActivity(this, user.getDisplayName());
+
+            Intent myIntent = new Intent(Login.this, MainActivity.class);
+
+            Login.this.startActivity(myIntent);
+           //*** MainActivity.startActivity(this, user.getDisplayName());
             finish();
         }
     }

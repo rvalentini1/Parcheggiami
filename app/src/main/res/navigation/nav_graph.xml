@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login2">
+
+    <activity
+        android:id="@+id/login2"
+        android:name="com.example.parcheggiami.Login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" >
+        <action
+            android:id="@+id/action_login2_to_registrationActivity"
+            app:destination="@id/registrationActivity" />
+    </activity>
+    <activity
+        android:id="@+id/registrationActivity"
+        android:name="com.example.parcheggiami.RegistrationActivity"
+        android:label="activity_registration"
+        tools:layout="@layout/activity_registration" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/mainActivity" >
+        <activity
+            android:id="@+id/mainActivity"
+            android:name="com.example.parcheggiami.MainActivity"
+            android:label="activity_main"
+            tools:layout="@layout/activity_main" />
+        <action
+            android:id="@+id/action_global_login22"
+            app:destination="@id/login2" />
+    </navigation>
+    <fragment
+        android:id="@+id/fragmentMapFragment2"
+        android:name="com.example.parcheggiami.ui.fragmentmap.FragmentMapFragment"
+        android:label="fragment_map_fragment"
+        tools:layout="@layout/fragment_map_fragment" >
+        <action
+            android:id="@+id/action_fragmentMapFragment2_to_navigation"
+            app:destination="@id/navigation" />
+    </fragment>
+</navigation>

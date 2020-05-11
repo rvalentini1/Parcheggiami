@@ -11,55 +11,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".Login"
+    tools:context=".RegistrationActivity"
     android:orientation="vertical">
 
 
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="125dp"
-        android:layout_height="49dp"
-        android:layout_gravity="start"
-        android:background="@drawable/ic_button_singin"
-        android:enabled="true"
-        android:text="@string/title_activity_login"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:background="@drawable/ic_button_singin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
-        app:layout_constraintVertical_bias="0.162" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="125dp"
-        android:layout_height="49dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_button_singin"
 
-        android:text="REGISTRATI"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="onClickRegister"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+
+
 
     <ProgressBar
         android:id="@+id/loading"
@@ -126,10 +88,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"/>
-     <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnregister"
+        android:layout_width="125dp"
+        android:layout_height="49dp"
+        android:layout_gravity="start"
+        android:background="@drawable/ic_button_singin"
+        android:enabled="true"
+        android:text="REGISTRATI"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,19 +62,7 @@ public class MainActivity extends AppCompatActivity  {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentMapFragment()).commit();
 
                         break;
-                       /*        case R.id.call:
-             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CallFragment()).commit();
-                        break;
-                    case R.id.share:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
-                        break;
-                    case R.id.send:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SendFragment()).commit();
 
-                        break;
-                    case R.id.close:
-                        finish();
-                        break;*/
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

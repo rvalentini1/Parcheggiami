@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     android:background="#234CA1"
     android:backgroundTint="#234CA1"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".Login"
-    android:orientation="vertical">
-
+    tools:context=".Login">
 
 
     <Button
@@ -43,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login"
-        app:layout_constraintVertical_bias="0.162" />
+        app:layout_constraintVertical_bias="0.11" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -51,14 +50,16 @@
         android:layout_height="49dp"
         android:layout_gravity="start"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ic_button_singin"
+        android:layout_marginBottom="109dp"
 
+        android:background="@drawable/ic_button_singin"
+        android:onClick="onClickRegister"
         android:text="REGISTRATI"
         android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="onClickRegister"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
     <ProgressBar
@@ -84,7 +85,7 @@
         android:layout_marginTop="67dp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.176"
@@ -94,6 +95,9 @@
         android:id="@+id/username"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="469dp"
         android:autofillHints=""
         android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_username"
@@ -102,16 +106,19 @@
         android:selectAllOnFocus="true"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="416dp"
         android:autofillHints=""
         android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_password"
@@ -122,14 +129,16 @@
         android:selectAllOnFocus="true"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/username"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
-     <ProgressBar
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username" />
+
+    <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-         tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

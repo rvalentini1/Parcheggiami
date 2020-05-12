@@ -134,7 +134,7 @@ public class Login extends AppCompatActivity {
                                             .show();
 
                                     // hide the progress bar
-                                    progressBar.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.INVISIBLE);
 
                                     // if sign-in is successful
                                     // intent to home activity
@@ -153,7 +153,7 @@ public class Login extends AppCompatActivity {
                                             .show();
 
                                     // hide the progress bar
-                                    progressBar.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
                             }
                         });

@@ -56,6 +56,7 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
+    private int REQUEST_LOCATION = 101;
     SearchView searchView;
     double Lat=0;
     double Long=0;
@@ -65,6 +66,7 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     FirebaseAuth firebaseAuth;
     GoogleSignInClient googleSignInClient;
     private GoogleMap mMap;
+
     public static FragmentMapFragment newInstance() {
         return new FragmentMapFragment();
     }
@@ -78,6 +80,12 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
         Button b = (Button) v.findViewById(R.id.buttonPark);
         b.setOnClickListener(this);
 
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions( //Method of Fragment
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    101
+            );
+        }
 
         return v;
     }
@@ -94,16 +102,8 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
 
         final TextView textView = (TextView) getView().findViewById(R.id.textView);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-      /*  SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-       // mapFragment.getMapAsync(this);*/
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         fetchLocation();
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
-
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -131,13 +131,6 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
 
 
     private void fetchLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -145,12 +138,9 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
             public void onSuccess(Location location) {
                 if (location != null) {
 
-                     currentLocation = location;
+                    currentLocation = location;
                     Toast.makeText(getActivity().getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                  /*  SupportMapFragment supportMapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
-                    assert supportMapFragment != null;
-                    supportMapFragment.getMapAsync(this);
-*/
+
                     LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
                     Lat=currentLocation.getLatitude();
@@ -161,39 +151,33 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
                     mMap.addMarker(markerOptions);
 
-                }
+              }
             }
         });
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       // Toast.makeText(getActivity().getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
         mMap=googleMap;
-
     }
+
     @Override
-    //Permessi per la geolocalizzazione
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fetchLocation();
-                }
-                break;
-        }
+    public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions,@NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+            // Verifico se l'utente ha accettato i permessi richiesti
+            if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+              // Rilevo la posizione attuale
+               fetchLocation();
+            }
     }
 
     //Leggo da firebase tutti i parcheggi memorizzati
     private void retrieve_marker(DataSnapshot dataSnapshot) {
-
-        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
             if(mMap != null) {
                 mMap.clear();
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    Log.v("FIREBASELOG", "" + childDataSnapshot.child("libero").getValue());
 
-                    Log.v("FIREBASELOG", "" + childDataSnapshot.getKey()); //displays the key for the node
-                    Log.v("FIREBASELOG", "" + childDataSnapshot.child("latitude").getValue());   //gives the value for given keyname
                     Double vLat = Double.parseDouble(String.valueOf(childDataSnapshot.child("latitude").getValue()));
                     Double vLong = Double.parseDouble(String.valueOf(childDataSnapshot.child("longitude").getValue()));
                     LatLng latLng = new LatLng(vLat, vLong);
@@ -204,14 +188,17 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
                     }
                     calculate_distance(vLat,vLong);
                 }
-                LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                if(currentLocation!=null){
+                    LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
-                Lat = currentLocation.getLatitude();
-                Long = currentLocation.getLongitude();
+                    Lat = currentLocation.getLatitude();
+                    Long = currentLocation.getLongitude();
 
-                MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Sei qui!");
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.addMarker(markerOptions);
+                    MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Sei qui!");
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.addMarker(markerOptions);
+                }
+
             }
         }
 
@@ -219,21 +206,24 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     }
     //Calcolo la distanza tra due coordinate
     private void calculate_distance(Double vLat,Double vLong){
-        float[] results = new float[1];
-        Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
-                vLat, vLong, results);
+        if(currentLocation!=null){
+            float[] results = new float[1];
+            Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
+                    vLat, vLong, results);
 
-        final TextView textDistance = (TextView) getActivity().findViewById(R.id.textDistance);
-        textDistance.setText(String.valueOf(results[0]));
-        if (results[0] > 2000) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            final DatabaseReference myRef = database.getReference().child("parks");
-            String uid = currentUser.getUid();
-            //Aggiorno il nodo relativo al parcheggio con lo stato "libero"
-            Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1");
-            myRef.child(uid).setValue(park);
+            final TextView textDistance = (TextView) getActivity().findViewById(R.id.textDistance);
+            textDistance.setText(String.valueOf(results[0]));
+            if (results[0] > 2000) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                final DatabaseReference myRef = database.getReference().child("parks");
+                String uid = currentUser.getUid();
+                //Aggiorno il nodo relativo al parcheggio con lo stato "libero"
+                Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1");
+                myRef.child(uid).setValue(park);
+            }
         }
+
     }
     public void onResume(){
         super.onResume();
@@ -267,7 +257,7 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     public void onClick(View view) {
         Toast.makeText(getActivity(), "Informazioni Memorizzate", Toast.LENGTH_LONG).show();
 
-        // Write a message to the database
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         final DatabaseReference myRef = database.getReference().child("parks");
@@ -282,23 +272,5 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    /*@Override
-    public void onMapReady_(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }*/
 
 }

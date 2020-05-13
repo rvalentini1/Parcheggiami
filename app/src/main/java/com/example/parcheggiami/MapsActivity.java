@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
-    public void onClickBtn(View v)
+  /*  public void onClickBtn(View v)
     {
         Toast.makeText(this, "Informazioni Memorizzate", Toast.LENGTH_LONG).show();
 
@@ -141,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // faccio il 'push' di park nel nodo usando parkid
         myRef.child(uid).setValue(park);
-    }
+    }*/
 
     private void fetchLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -234,7 +234,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
                 vLat, vLong, results);
 
-        final TextView textDistance = (TextView) findViewById(R.id.textDistance);
+        final TextView textDistance = (TextView) findViewById(R.id.textPosti);
         textDistance.setText(String.valueOf(results[0]));
         if (results[0] > 2000) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -242,8 +242,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             final DatabaseReference myRef = database.getReference().child("parks");
             String uid = currentUser.getUid();
             //Aggiorno il nodo relativo al parcheggio con lo stato "libero"
-            Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1");
-            myRef.child(uid).setValue(park);
+           // Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1");
+           // myRef.child(uid).setValue(park);
         }
     }
     /**

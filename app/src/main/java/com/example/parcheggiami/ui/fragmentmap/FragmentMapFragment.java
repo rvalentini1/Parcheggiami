@@ -4,6 +4,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +51,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
+import java.util.Map;
 
 public class FragmentMapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
 
@@ -60,12 +63,17 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     SearchView searchView;
     double Lat=0;
     double Long=0;
+    double Latsel=0;
+    double Longsel=0;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private Park park;
     FirebaseAuth firebaseAuth;
     GoogleSignInClient googleSignInClient;
     private GoogleMap mMap;
+    private String marker_id="";
+
+    Park mypark;
 
     public static FragmentMapFragment newInstance() {
         return new FragmentMapFragment();
@@ -79,6 +87,9 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
 
         Button b = (Button) v.findViewById(R.id.buttonPark);
         b.setOnClickListener(this);
+
+        Button b2 = (Button) v.findViewById(R.id.buttonLibera);
+        b2.setOnClickListener(this);
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions( //Method of Fragment
@@ -146,10 +157,12 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
                     Lat=currentLocation.getLatitude();
                     Long=currentLocation.getLongitude();
 
+
                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Sei qui!");
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
-                    mMap.addMarker(markerOptions);
+                   // mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
+                    Marker marker= mMap.addMarker(markerOptions);
+
 
               }
             }
@@ -158,6 +171,25 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
+
+         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                Object m=marker.getTag();
+                String tags;
+                if(m!=null) marker_id=m.toString();
+                else marker_id="";
+
+                Longsel=marker.getPosition().longitude;
+                Latsel=marker.getPosition().latitude;
+                //Toast.makeText(getActivity(),  marker_id  , Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+            });
+
+
     }
 
     @Override
@@ -173,7 +205,9 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
 
     //Leggo da firebase tutti i parcheggi memorizzati
     private void retrieve_marker(DataSnapshot dataSnapshot) {
-         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+         int count_liberi=0;
+      //   for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+            mypark=null;
             if(mMap != null) {
                 mMap.clear();
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
@@ -182,11 +216,22 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
                     Double vLong = Double.parseDouble(String.valueOf(childDataSnapshot.child("longitude").getValue()));
                     LatLng latLng = new LatLng(vLat, vLong);
                     if (childDataSnapshot.child("libero").getValue().toString().equals("1")) {
-                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("P1").icon(BitmapDescriptorFactory.fromResource(R.drawable.location));
+                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Posizione Libera").snippet("Clicca per impostare la posizione").icon(BitmapDescriptorFactory.fromResource(R.drawable.location));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.addMarker(markerOptions);
+                        Marker marker=mMap.addMarker(markerOptions);
+                        marker.setTag(childDataSnapshot.getKey());
+                        count_liberi+=1
+                        ;
+                    }else if(childDataSnapshot.child("user").getValue().toString().equals(firebaseAuth.getCurrentUser().getUid().toString())){
+                        mypark = childDataSnapshot.getValue(Park.class);
+                        marker_id=childDataSnapshot.getKey();
                     }
-                    calculate_distance(vLat,vLong);
+
+               //     TextView textPosti = getActivity().findViewById(R.id.textPosti); //(TextView) getActivity().findViewById(R.id.textPosti);
+                 //   textPosti.setText(String.valueOf(count_liberi));
+
+
+             //**       calculate_distance(vLat,vLong);
                 }
                 if(currentLocation!=null){
                     LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -200,10 +245,11 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
                 }
 
             }
-        }
+        //}
 
 
     }
+
     //Calcolo la distanza tra due coordinate
     private void calculate_distance(Double vLat,Double vLong){
         if(currentLocation!=null){
@@ -211,16 +257,16 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
             Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
                     vLat, vLong, results);
 
-            final TextView textDistance = (TextView) getActivity().findViewById(R.id.textDistance);
-            textDistance.setText(String.valueOf(results[0]));
+            final TextView textDistance = (TextView) getActivity().findViewById(R.id.textPosti);
+          //  textDistance.setText(String.valueOf(results[0]));
             if (results[0] > 2000) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 final DatabaseReference myRef = database.getReference().child("parks");
                 String uid = currentUser.getUid();
                 //Aggiorno il nodo relativo al parcheggio con lo stato "libero"
-                Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1");
-                myRef.child(uid).setValue(park);
+                Park park = new Park(String.valueOf(vLat), String.valueOf(vLong), "1",uid);
+               // myRef.child(uid).setValue(park);
             }
         }
 
@@ -255,21 +301,52 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     }
     @Override
     public void onClick(View view) {
-        Toast.makeText(getActivity(), "Informazioni Memorizzate", Toast.LENGTH_LONG).show();
+        switch(view.getId()){
+            case R.id.buttonPark:
+                if(mypark != null) {
+                    Toast.makeText(getActivity(), "Posizione parcheggio già memorizzata", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(marker_id!=""){
+                    Toast.makeText(getActivity(), "Informazioni Memorizzate", Toast.LENGTH_LONG).show();
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        final DatabaseReference myRef = database.getReference().child("parks");
-        String uid = currentUser.getUid();
-        // Creo un nuovo nodo per la classe Park,che ritorna un id univoco
-        // Il nodo Park sarò /parks/$parkij/
-        // creo l'oggetto park
-        Park park = new Park(String.valueOf(Lat), String.valueOf(Long),"0");
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    final DatabaseReference myRef = database.getReference().child("parks");
+                    //***    String uid = currentUser.getUid();
+                    // Creo un nuovo nodo per la classe Park,che ritorna un id univoco
+                    // Il nodo Park sarò /parks/$parkij/
+                    // creo l'oggetto park
+                    Park park = new Park(String.valueOf(Latsel), String.valueOf(Longsel),"0", currentUser.getUid());
 
-        // faccio il 'push' di park nel nodo usando parkid
-        myRef.child(uid).setValue(park);
+                    // faccio il 'push' di park nel nodo usando parkid
+                    myRef.child(marker_id).setValue(park);
+                    marker_id="";
+                    Latsel=0;
+                    Longsel=0;
+                } else  Toast.makeText(getActivity(), "Nessuna posizione selezionata", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.buttonLibera:
+                if(mypark != null) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    final DatabaseReference myRef = database.getReference().child("parks");
+                    //Aggiorno il nodo relativo al parcheggio con lo stato "libero"
+                    mypark.libera();
+                    myRef.child(marker_id).setValue(mypark);
+                    Toast.makeText(getActivity(), "Posizione liberata", Toast.LENGTH_LONG).show();
+                    mypark=null;
+                    marker_id="";
+                    return;
+                } else    Toast.makeText(getActivity(), "Nessun parcheggio memorizzato", Toast.LENGTH_LONG).show();
+                break;
+        }
+
+
     }
+
+
 
 
 

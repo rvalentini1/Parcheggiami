@@ -40,7 +40,7 @@
         android:topRightRadius="10dp" />
 
     <TextView
-        android:id="@+id/textDistance"
+        android:id="@+id/textPosti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

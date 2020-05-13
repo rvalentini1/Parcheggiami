@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.129" />
 
     <TextView
-        android:id="@+id/textDistance"
+        android:id="@+id/textPosti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -83,5 +83,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
+
+    <Button
+        android:id="@+id/buttonLibera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Libera"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="575dp"
+        android:onClick="onClick"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -172,7 +172,8 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
 
-         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 marker.showInfoWindow();
@@ -241,12 +242,13 @@ public class FragmentMapFragment extends Fragment implements OnMapReadyCallback,
 
                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Sei qui!");
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
                     mMap.addMarker(markerOptions);
                 }
 
+
             }
         //}
-
 
     }
 

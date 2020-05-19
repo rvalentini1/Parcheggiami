@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar1"
+        layout="@layout/toolbar">
+
+    </include>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="389dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/tv_long"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="295dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="101dp"
+            android:padding="8dp"
+            android:text="Longitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_longitudine"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="295dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="153dp"
+            android:padding="8dp"
+            android:text="Longitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/buttonPark"
+
+            android:layout_width="96dp"
+
+            android:layout_height="99dp"
+
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="275dp"
+            android:layout_marginBottom="121dp"
+            android:background="@drawable/save_pos"
+            android:bottomLeftRadius="10dp"
+            android:bottomRightRadius="10dp"
+            android:onClick="onClick"
+            android:padding="8dp"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:topLeftRadius="10dp"
+            android:topRightRadius="10dp"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_lat"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="159dp"
+            android:layout_marginTop="156dp"
+            android:layout_marginEnd="159dp"
+            android:layout_marginBottom="101dp"
+            android:text="Latitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_lattitudine"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="159dp"
+            android:layout_marginTop="96dp"
+            android:layout_marginEnd="159dp"
+            android:layout_marginBottom="161dp"
+            android:text="Latitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonLibera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="161dp"
+            android:layout_marginEnd="162dp"
+            android:background="@drawable/ic_button_singin"
+            android:onClick="onClick"
+            android:text="Libera"
+            map:layout_constraintBottom_toTopOf="@+id/tv_lattitudine"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="215dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="52dp"
+            android:text="IndirizzoAttuale"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent"
+            map:layout_constraintVertical_bias="0.47000003" />
+
+        <TextView
+            android:id="@+id/tv_pos_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="145dp"
+            android:layout_marginEnd="269dp"
+            android:layout_marginBottom="122dp"
+            android:text="posizione parcheggio"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pos_park_lat"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="164dp"
+            android:layout_marginEnd="312dp"
+            android:layout_marginBottom="103dp"
+            android:text="Latitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_pos_park_long"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="196dp"
+            android:layout_marginEnd="312dp"
+            android:layout_marginBottom="71dp"
+            android:text="Longitudine"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_distanza"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="293dp"
+            android:layout_marginTop="41dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="226dp"
+            android:text="Distanza mt"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_dist"
+            android:layout_width="93dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="295dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="207dp"
+            android:text="dist"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

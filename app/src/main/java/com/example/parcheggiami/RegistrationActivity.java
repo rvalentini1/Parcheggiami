@@ -26,16 +26,16 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-               // taking FirebaseAuth instance
+        //Istanza Firebase
         mAuth = FirebaseAuth.getInstance();
 
-        // initialising all views through id defined above
+        // Inizializzo gli elementi della view
         emailTextView = findViewById(R.id.username);
         passwordTextView = findViewById(R.id.password);
         Btn = findViewById(R.id.btnregister);
         progressBar = findViewById(R.id.loading);
 
-        // Set on Click Listener on Registration button
+        // Setto l'evento onclick del pulsante
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -47,31 +47,31 @@ public class RegistrationActivity extends AppCompatActivity {
     private void registerNewUser()
     {
 
-        // show the visibility of progress bar to show loading
+
         progressBar.setVisibility(View.VISIBLE);
 
-        // Take the value of two edit texts in Strings
+
         String email, password;
         email = emailTextView.getText().toString();
         password = passwordTextView.getText().toString();
 
-        // Validations for input email and password
+        // Validazione email e password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
-                    "Please enter email!!",
+                    "Inserisci la mail!!",
                     Toast.LENGTH_LONG)
                     .show();
             return;
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
-                    "Please enter password!!",
+                    "Inserisci la password!!",
                     Toast.LENGTH_LONG)
                     .show();
             return;
         }
 
-        // create new user or register new user
+        // Creazione nuovo utente
         mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -81,30 +81,28 @@ public class RegistrationActivity extends AppCompatActivity {
                     {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
-                                    "Registration successful!",
+                                    "Registrazione avvenuta con successo!",
                                     Toast.LENGTH_LONG)
                                     .show();
 
-                            // hide the progress bar
+
                             progressBar.setVisibility(View.GONE);
 
-                            // if the user created intent to login activity
+                            // Lancio l'activity map dopo la registrazione
                             Intent intent
                                     = new Intent(RegistrationActivity.this,
-                                    MainActivity.class);
+                                    MapsActivity2.class);
                             startActivity(intent);
                         }
                         else {
 
-                            // Registration failed
+                            // Registrazione fallita
                             Toast.makeText(
                                     getApplicationContext(),
-                                    "Registration failed!!"
-                                            + " Please try again later",
+                                    "Registrazione fallita, riprova",
                                     Toast.LENGTH_LONG)
                                     .show();
 
-                            // hide the progress bar
                             progressBar.setVisibility(View.GONE);
                         }
                     }

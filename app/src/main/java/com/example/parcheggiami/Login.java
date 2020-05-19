@@ -1,9 +1,6 @@
 package com.example.parcheggiami;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -49,15 +46,13 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-     /*    actionbar = getSupportActionBar();
-         actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#234ca1")));*/
-
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                // Lancio la Login
-                signInToGoogle();
+
+                Intent signInIntent = googleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
 
@@ -66,13 +61,13 @@ public class Login extends AppCompatActivity {
         configureGoogleClient();
 
 
-        // initialising all views through id defined above
+        // inizilizzo gli elementi della view
         emailTextView = findViewById(R.id.username);
         passwordTextView = findViewById(R.id.password);
         Btn2 = findViewById(R.id.login);
         progressBar = findViewById(R.id.progressBar);
 
-        // Set on Click Listener on Sign-in button
+        // Onclick listner per il pulsante di login
         Btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -84,7 +79,7 @@ public class Login extends AppCompatActivity {
 
 
     public void onClickRegister(View v) {
-        showToastMessage("Ciaooooooo");
+
         Intent myIntent = new Intent(Login.this, RegistrationActivity.class);
 
         Login.this.startActivity(myIntent);
@@ -94,18 +89,18 @@ public class Login extends AppCompatActivity {
     private void loginUserAccount()
     {
 
-        // show the visibility of progress bar to show loading
+
         progressBar.setVisibility(View.VISIBLE);
 
-        // Take the value of two edit texts in Strings
+
         String email, password;
         email = emailTextView.getText().toString();
         password = passwordTextView.getText().toString();
 
-        // validations for input email and password
+        // VALIDAZIONE EMAIL E PASSWWORD
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
-                    "Please enter email!!",
+                    "Inserisci la mail!!",
                     Toast.LENGTH_LONG)
                     .show();
             return;
@@ -113,13 +108,13 @@ public class Login extends AppCompatActivity {
 
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
-                    "Please enter password!!",
+                    "Inserisci la password !!",
                     Toast.LENGTH_LONG)
                     .show();
             return;
         }
 
-        // signin existing user
+        // Login utente già registrato
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
@@ -133,26 +128,25 @@ public class Login extends AppCompatActivity {
                                             Toast.LENGTH_LONG)
                                             .show();
 
-                                    // hide the progress bar
+
                                     progressBar.setVisibility(View.INVISIBLE);
 
-                                    // if sign-in is successful
-                                    // intent to home activity
+                                    // Se la login ha successo, vado alla Map Activity
+
                                     Intent intent
                                             = new Intent(Login.this,
-                                            MainActivity.class);
+                                            MapsActivity2.class);
                                     startActivity(intent);
                                 }
 
                                 else {
 
-                                    // sign-in failed
+                                    // Login Fallita
                                     Toast.makeText(getApplicationContext(),
-                                            "Login failed!!",
+                                            "Login non riuscita!!",
                                             Toast.LENGTH_LONG)
                                             .show();
 
-                                    // hide the progress bar
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             }
@@ -174,7 +168,7 @@ public class Login extends AppCompatActivity {
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
 
-        // Initialize Firebase Auth
+        // Inizializzo Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
@@ -186,16 +180,12 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Log.d(TAG, "Currently Signed in: " + currentUser.getEmail());
-            showToastMessage("Currently Logged in: " + currentUser.getEmail());
+            showToastMessage("Attualemente loggato con: " + currentUser.getEmail());
             launchMainActivity(currentUser);
         }
     }
 
-    public void signInToGoogle() {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -217,7 +207,6 @@ public class Login extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
@@ -225,19 +214,15 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Login riuscita
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                            Log.d(TAG, "signInWithCredential:success: currentUser: " + user.getEmail());
-
-                            showToastMessage("Firebase Authentication Succeeded ");
+                           // showToastMessage("Firebase OK ");
                             launchMainActivity(user);
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // Se la login fallisce, avviso l'intente
 
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-
-                            showToastMessage("Firebase Authentication failed:" + task.getException());
+                            showToastMessage("Autenticazione firebase fallita:" + task.getException());
                         }
                     }
                 });
@@ -250,10 +235,8 @@ public class Login extends AppCompatActivity {
     private void launchMainActivity(FirebaseUser user) {
 
         if (user != null) {
-            Log.w("TAGPROVA", user.getDisplayName());
 
-
-            Intent myIntent = new Intent(Login.this, MainActivity.class);
+            Intent myIntent = new Intent(Login.this, MapsActivity2.class);
 
             Login.this.startActivity(myIntent);
            //*** MainActivity.startActivity(this, user.getDisplayName());
